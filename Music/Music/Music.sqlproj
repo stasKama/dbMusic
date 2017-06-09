@@ -64,5 +64,6 @@
     <Build Include="Track.sql" />
     <Build Include="Mix.sql" />
     <Build Include="User.sql" />
+    <Build Include="CountTracksMusic.sql" />
   </ItemGroup>
 </Project>
