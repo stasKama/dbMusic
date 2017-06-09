@@ -3,7 +3,7 @@
 	[Id] INT NOT NULL IDENTiTY(1,1) PRIMARY KEY,
 	[Name] VARCHAR(20) NOT NULL,
 	[UserId] INT NOT NULL,
-	[TrackId] INT NOT NULL,
-	FOREIGN KEY ([TrackId]) REFERENCES [Track] ([Id]),
+	[PrimaryGenre] VARCHAR(40) NULL,
+	[SecondaryGenre] VARCHAR(40) NULL,
     FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
 )
