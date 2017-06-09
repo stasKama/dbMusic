@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Mix]
+(
+	[Id] INT NOT NULL IDENTiTY(1,1) PRIMARY KEY,
+	[Name] VARCHAR(20) NOT NULL,
+	[UserId] INT NOT NULL,
+	[TrackId] INT NOT NULL,
+	FOREIGN KEY ([TrackId]) REFERENCES [Track] ([Id]),
+    FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+)

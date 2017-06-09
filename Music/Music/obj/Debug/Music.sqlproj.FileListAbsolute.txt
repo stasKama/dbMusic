@@ -1,0 +1,9 @@
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\bin\Debug\Music.dacpac
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\bin\Debug\Music.dll
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\bin\Debug\Music.pdb
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\Model.xml
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\refactor.xml
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\postdeploy.sql
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\predeploy.sql
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\Music.dll
+C:\Users\Lenovo\Documents\dbMusic\Music\Music\obj\Debug\Music.pdb

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[User]
+(
+	[Id] INT NOT NULL IDENTiTY(1,1) PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL,
+	[CountCreateMix] INT DEFAULT 0
+)
