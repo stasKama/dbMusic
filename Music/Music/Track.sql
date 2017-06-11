@@ -16,25 +16,52 @@ CREATE TRIGGER [dbo].[Trigger_Mix_For]
     AS
     BEGIN
         SET NoCount ON
-		DECLARE @MusicId INT, @CountMusic INT, @CountLicenses INT, @CountInsert INT
-		DECLARE trackCursor CURSOR LOCAL STATIC FOR
-			SELECT inserted.MusicId FROM inserted
 
-		OPEN trackCursor
-		FETCH FIRST FROM trackCursor INTO @MusicId
+		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @TimeMix NUMERIC(5, 2)
+
+		DECLARE trackMusicCursor CURSOR LOCAL STATIC FOR
+		SELECT m.[Id], i.CountTracks + m.[TrackCount], m.[TrackLicenses] FROM dbo.[Music] m 
+			INNER JOIN 
+			(SELECT COUNT([MusicId]) AS CountTracks,[MusicId] FROM inserted GROUP BY [MusicId]) i 
+			ON  m.[Id] = i.[MusicId]
+			WHERE m.[Id] IN (SELECT [MusicId] FROM inserted GROUP BY [MusicId]) 
+
+		OPEN trackMusicCursor
+
+		FETCH FIRST FROM trackMusicCursor INTO @Id, @CountMusic, @CountLicenses
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			SELECT @CountInsert = COUNT(*) FROM inserted WHERE MusicId = @MusicId
-			SELECT @CountMusic = TrackCount, @CountLicenses = TrackLicenses FROM dbo.[Music] WHERE Id = @MusicId
-			IF @CountMusic + @CountInsert > @CountLicenses
+			IF @CountMusic > @CountLicenses
 			BEGIN
 				ROLLBACK TRAN
 				RETURN
 			END
-			FETCH NEXT FROM trackCursor INTO @MusicId
+			FETCH NEXT FROM trackMusicCursor INTO @Id, @CountMusic, @CountLicenses
 		END
-		CLOSE trackCursor
-		DEALLOCATE trackCursor
+		CLOSE trackMusicCursor
+		DEALLOCATE trackMusicCursor
+		
+		DECLARE trackMixCursor CURSOR LOCAL STATIC FOR
+		SELECT m.[Id], COUNT(m.[Id]), SUM(s.[Length]) FROM dbo.[Mix] m 
+			INNER JOIN dbo.[Track] t ON m.[Id] = t.[MixId]
+			INNER JOIN dbo.[Music] s ON t.[MusicId] = s.[Id]
+			WHERE m.[Id] IN (SELECT [MixId] FROM inserted GROUP BY [MixId]) 
+			GROUP BY m.[Id]
+
+		OPEN trackMixCursor
+
+		FETCH FIRST FROM trackMixCursor INTO @Id, @CountMusic, @TimeMix
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			IF @CountMusic > 20 OR @TimeMix > 90.0
+			BEGIN
+				ROLLBACK TRAN
+				RETURN
+			END
+			FETCH NEXT FROM trackMixCursor INTO @Id, @CountMusic, @TimeMix
+		END
+		CLOSE trackMixCursor
+		DEALLOCATE trackMixCursor
     END
 GO
 
