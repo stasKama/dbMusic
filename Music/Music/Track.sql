@@ -12,7 +12,7 @@ GO
 
 CREATE TRIGGER [dbo].[Trigger_Mix_For]
     ON [dbo].[Track]
-    FOR INSERT
+    FOR INSERT, UPDATE
     AS
     BEGIN
         SET NoCount ON
@@ -78,29 +78,7 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 			MusicId INT
 		)
 		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @PrimaryGenre VARCHAR(40), @SecondaryGenre VARCHAR(40)
-		IF UPDATE([SongId]) 
-		BEGIN
-			DECLARE trackUpdateCursor CURSOR LOCAL STATIC FOR
-			SELECT t.[CountMusic], s.[TrackLicenses] FROM dbo.[Song] s 
-				INNER JOIN (SELECT [SongId], COUNT([SongId]) AS CountMusic FROM dbo.[Track] GROUP BY [SongId]) t 
-				ON s.[Id] = t.[SongId]
-				WHERE s.[Id] IN (SELECT [SongId] FROM inserted GROUP BY [SongId])
-
-			OPEN trackUpdateCursor
-			FETCH FIRST FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
-			WHILE @@FETCH_STATUS = 0
-			BEGIN
-				IF @CountMusic > @CountLicenses
-				BEGIN
-					ROLLBACK TRAN
-					RETURN
-				END
-				FETCH NEXT FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
-			END
-			CLOSE trackUpdateCursor
-			DEALLOCATE trackUpdateCursor
-		END
-
+		
 		IF EXISTS(SELECT * FROM deleted)
 		BEGIN
 			INSERT INTO @TableMixId SELECT [MixId] FROM deleted GROUP BY [MixId]
