@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[Track]
 (
 	[Id] INT NOT NULL IDENTiTY(1,1) PRIMARY KEY,
-	[MusicId] INT,
+	[SongId] INT,
 	[MixId] INT NOT NULL,
-	UNIQUE([MusicId], [MixId]),
-	FOREIGN KEY ([MusicId]) REFERENCES [Music] ([Id]) ON DELETE CASCADE,
+	UNIQUE([SongId], [MixId]),
+	FOREIGN KEY ([SongId]) REFERENCES [Song] ([Id]) ON DELETE CASCADE,
 	FOREIGN KEY ([MixId]) REFERENCES [Mix] ([Id]) ON DELETE CASCADE
 )
 
@@ -20,11 +20,11 @@ CREATE TRIGGER [dbo].[Trigger_Mix_For]
 		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @TimeMix NUMERIC(5, 2)
 
 		DECLARE trackMusicCursor CURSOR LOCAL STATIC FOR
-		SELECT m.[Id], i.CountTracks + m.[TrackCount], m.[TrackLicenses] FROM dbo.[Music] m 
+		SELECT s.[Id], i.CountTracks + s.[TrackCount], s.[TrackLicenses] FROM dbo.[Song] s 
 			INNER JOIN 
-			(SELECT COUNT([MusicId]) AS CountTracks,[MusicId] FROM inserted GROUP BY [MusicId]) i 
-			ON  m.[Id] = i.[MusicId]
-			WHERE m.[Id] IN (SELECT [MusicId] FROM inserted GROUP BY [MusicId]) 
+			(SELECT COUNT([SongId]) AS CountTracks, [SongId] FROM inserted GROUP BY [SongId]) i 
+			ON  s.[Id] = i.[SongId]
+			WHERE s.[Id] IN (SELECT [SongId] FROM inserted GROUP BY [SongId]) 
 
 		OPEN trackMusicCursor
 
@@ -44,7 +44,7 @@ CREATE TRIGGER [dbo].[Trigger_Mix_For]
 		DECLARE trackMixCursor CURSOR LOCAL STATIC FOR
 		SELECT m.[Id], COUNT(m.[Id]), SUM(s.[Length]) FROM dbo.[Mix] m 
 			INNER JOIN dbo.[Track] t ON m.[Id] = t.[MixId]
-			INNER JOIN dbo.[Music] s ON t.[MusicId] = s.[Id]
+			INNER JOIN dbo.[Song] s ON t.[SongId] = s.[Id]
 			WHERE m.[Id] IN (SELECT [MixId] FROM inserted GROUP BY [MixId]) 
 			GROUP BY m.[Id]
 
@@ -78,13 +78,13 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 			MusicId INT
 		)
 		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @PrimaryGenre VARCHAR(40), @SecondaryGenre VARCHAR(40)
-		IF UPDATE(MusicId) 
+		IF UPDATE([SongId]) 
 		BEGIN
 			DECLARE trackUpdateCursor CURSOR LOCAL STATIC FOR
-			SELECT t.[CountMusic], m.[TrackLicenses] FROM dbo.[Music] m 
-				INNER JOIN (SELECT [MusicId], COUNT([MusicId]) AS CountMusic FROM dbo.[Track] GROUP BY [MusicId]) t 
-				ON m.[Id] = t.[MusicId]
-				WHERE m.[Id] IN (SELECT [MusicId] FROM inserted GROUP BY [MusicId])
+			SELECT t.[CountMusic], s.[TrackLicenses] FROM dbo.[Song] s 
+				INNER JOIN (SELECT [SongId], COUNT([SongId]) AS CountMusic FROM dbo.[Track] GROUP BY [SongId]) t 
+				ON s.[Id] = t.[SongId]
+				WHERE s.[Id] IN (SELECT [SongId] FROM inserted GROUP BY [SongId])
 
 			OPEN trackUpdateCursor
 			FETCH FIRST FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
@@ -104,12 +104,12 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		IF EXISTS(SELECT * FROM deleted)
 		BEGIN
 			INSERT INTO @TableMixId SELECT [MixId] FROM deleted GROUP BY [MixId]
-			INSERT INTO @TableMusicId SELECT [MusicId] FROM deleted GROUP BY [MusicId]
+			INSERT INTO @TableMusicId SELECT [SongId] FROM deleted GROUP BY [SongId]
 		END
 		IF EXISTS(SELECT * FROM inserted)
 		BEGIN
 			INSERT INTO @TableMixId SELECT [MixId] FROM inserted GROUP BY [MixId]
-			INSERT INTO @TableMusicId SELECT [MusicId] FROM inserted GROUP BY [MusicId]
+			INSERT INTO @TableMusicId SELECT [SongId] FROM inserted GROUP BY [SongId]
 		END
 
 		DECLARE trackCursor CURSOR LOCAL STATIC FOR
@@ -120,7 +120,7 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			SELECT @PrimaryGenre = PrimaryGenre, @SecondaryGenre = SecondaryGenre FROM [dbo].[GetGenre](@Id)
-			UPDATE dbo.[Mix] SET dbo.[Mix].PrimaryGenre = @PrimaryGenre,  dbo.[Mix].SecondaryGenre = @SecondaryGenre WHERE Id = @Id
+			UPDATE dbo.[Mix] SET dbo.[Mix].[PrimaryGenre] = @PrimaryGenre,  dbo.[Mix].[SecondaryGenre] = @SecondaryGenre WHERE Id = @Id
 			FETCH NEXT FROM trackMixCursor INTO @Id
 		END
 		CLOSE trackMixCursor
@@ -133,7 +133,7 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		FETCH FIRST FROM trackMusicCursor INTO @Id
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			UPDATE dbo.[Music] SET dbo.[Music].TrackCount = [dbo].[CountTracksMusic](@Id) WHERE Id = @Id
+			UPDATE dbo.[Song] SET dbo.[Song].[TrackCount] = [dbo].[CountTracksMusic](@Id) WHERE Id = @Id
 			FETCH NEXT FROM trackMusicCursor INTO @Id
 		END
 		CLOSE trackMusicCursor

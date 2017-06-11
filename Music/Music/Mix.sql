@@ -10,7 +10,7 @@
 
 GO
 
-CREATE TRIGGER [dbo].[Trigger_Get_Count_New_Mix]
+CREATE TRIGGER [dbo].[Trigger_Count_New_Mix]
     ON [dbo].[Mix]
     AFTER INSERT
     AS

@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Artist.sql" />
-    <Build Include="Music.sql" />
+    <Build Include="Song.sql" />
     <Build Include="Track.sql" />
     <Build Include="Mix.sql" />
     <Build Include="User.sql" />

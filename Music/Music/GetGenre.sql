@@ -12,11 +12,11 @@ BEGIN
 		Genre VARCHAR(40)
 	)
 
-	INSERT @TopGenre SELECT TOP 2 [Music].Genre FROM dbo.[Track] 
-		INNER JOIN dbo.[Music] ON [Track].MusicId = [Music].Id
+	INSERT @TopGenre SELECT TOP 2 [Song].Genre FROM dbo.[Track] 
+		INNER JOIN dbo.[Song] ON [Track].[SongId] = [Song].[Id]
 		WHERE MixId = @MixId 
-		GROUP BY [Music].Genre 
-		ORDER BY COUNT([Music].Genre) DESC
+		GROUP BY [Song].[Genre]
+		ORDER BY COUNT([Song].[Genre]) DESC
 
 	SELECT @PrimaryGenre = Genre FROM @TopGenre WHERE Id = 1;
 	SELECT @SecondaryGenre = Genre FROM @TopGenre WHERE Id = 2;

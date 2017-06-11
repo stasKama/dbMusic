@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Music]
+﻿CREATE TABLE [dbo].[Song]
 (
 	[Id] INT NOT NULL IDENTiTY(1,1) PRIMARY KEY,
 	[Name] varchar(30) NOT NULL,

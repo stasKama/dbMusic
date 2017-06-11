@@ -47,12 +47,12 @@
 			</Property>
 			<Relationship Name="CheckExpressionDependencies">
 				<Entry>
-					<References Name="[dbo].[Music].[Genre]" />
+					<References Name="[dbo].[Song].[Genre]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[Music]" />
+					<References Name="[dbo].[Song]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="3" />
@@ -99,12 +99,12 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[Music]" />
+					<References Name="[dbo].[Song]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[dbo].[Music].[TrackCount]" />
+					<References Name="[dbo].[Song].[TrackCount]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="5" />
@@ -115,61 +115,15 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[Music]" />
+					<References Name="[dbo].[Song]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[dbo].[Music].[TrackLicenses]" />
+					<References Name="[dbo].[Song].[TrackLicenses]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
-		</Element>
-		<Element Type="SqlForeignKeyConstraint">
-			<Relationship Name="Columns">
-				<Entry>
-					<References Name="[dbo].[Music].[ArtistId]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Music]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignColumns">
-				<Entry>
-					<References Name="[dbo].[Artist].[Id]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignTable">
-				<Entry>
-					<References Name="[dbo].[Artist]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
-		</Element>
-		<Element Type="SqlForeignKeyConstraint">
-			<Relationship Name="Columns">
-				<Entry>
-					<References Name="[dbo].[Mix].[TrackId]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Mix]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignColumns">
-				<Entry>
-					<References Name="[dbo].[Track].[Id]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignTable">
-				<Entry>
-					<References Name="[dbo].[Track]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint">
 			<Relationship Name="Columns">
@@ -192,13 +146,36 @@
 					<References Name="[dbo].[User]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Song].[ArtistId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Song]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Artist].[Id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Artist]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint">
 			<Property Name="OnDeleteAction" Value="1" />
 			<Relationship Name="Columns">
 				<Entry>
-					<References Name="[dbo].[Track].[MusicId]" />
+					<References Name="[dbo].[Track].[SongId]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="DefiningTable">
@@ -208,15 +185,15 @@
 			</Relationship>
 			<Relationship Name="ForeignColumns">
 				<Entry>
-					<References Name="[dbo].[Music].[Id]" />
+					<References Name="[dbo].[Song].[Id]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForeignTable">
 				<Entry>
-					<References Name="[dbo].[Music]" />
+					<References Name="[dbo].[Song]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint">
 			<Property Name="OnDeleteAction" Value="1" />
@@ -240,7 +217,7 @@
 					<References Name="[dbo].[Mix]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint">
 			<Relationship Name="ColumnSpecifications">
@@ -259,7 +236,7 @@
 					<References Name="[dbo].[User]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint">
 			<Relationship Name="ColumnSpecifications">
@@ -267,7 +244,7 @@
 					<Element Type="SqlIndexedColumnSpecification">
 						<Relationship Name="Column">
 							<Entry>
-								<References Name="[dbo].[Music].[Id]" />
+								<References Name="[dbo].[Artist].[Id]" />
 							</Entry>
 						</Relationship>
 					</Element>
@@ -275,10 +252,10 @@
 			</Relationship>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[Music]" />
+					<References Name="[dbo].[Artist]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint">
 			<Relationship Name="ColumnSpecifications">
@@ -295,6 +272,25 @@
 			<Relationship Name="DefiningTable">
 				<Entry>
 					<References Name="[dbo].[Mix]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Song].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Song]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
@@ -318,32 +314,13 @@
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
 		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Artist].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Artist]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
-		</Element>
 		<Element Type="SqlUniqueConstraint">
 			<Relationship Name="ColumnSpecifications">
 				<Entry>
 					<Element Type="SqlIndexedColumnSpecification">
 						<Relationship Name="Column">
 							<Entry>
-								<References Name="[dbo].[Track].[MusicId]" />
+								<References Name="[dbo].[Track].[SongId]" />
 							</Entry>
 						</Relationship>
 					</Element>
@@ -363,7 +340,7 @@
 					<References Name="[dbo].[Track]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Artist]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -383,7 +360,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="16" />
+						<AttachedAnnotation Disambiguator="12" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -420,6 +397,22 @@
 						</Relationship>
 					</Element>
 				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Artist].[Label]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="30" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
 			</Relationship>
 			<Relationship Name="Schema">
 				<Entry>
@@ -433,6 +426,15 @@
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
 				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[CountTracksMusic].[@MusicId]" />
+				</Entry>
 			</Relationship>
 			<Relationship Name="FunctionBody">
 				<Entry>
@@ -441,15 +443,15 @@
 							<Value><![CDATA[
 BEGIN
 	DECLARE @CountTracksMusic INT
-
+	SELECT @CountTracksMusic = COUNT(*) FROM dbo.[Track] WHERE [SongId] = @MusicId
 	RETURN @CountTracksMusic
 END]]></Value>
 						</Property>
 						<Annotation Type="SysCommentsObjectAnnotation">
-							<Property Name="Length" Value="147" />
+							<Property Name="Length" Value="230" />
 							<Property Name="StartLine" Value="1" />
 							<Property Name="StartColumn" Value="1" />
-							<Property Name="HeaderContents" Value="CREATE FUNCTION [dbo].[CountTracksMusic]&#xD;&#xA;(&#xD;&#xA;&#x9;@MusicId INT&#xD;&#xA;)&#xD;&#xA;RETURNS INT" />
+							<Property Name="HeaderContents" Value="CREATE FUNCTION [dbo].[CountTracksMusic]&#xD;&#xA;(&#xD;&#xA;&#x9;@MusicId INT&#xD;&#xA;)&#xD;&#xA;RETURNS INT&#xD;&#xA;AS" />
 						</Annotation>
 					</Element>
 				</Entry>
@@ -488,6 +490,178 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 		</Element>
+		<Element Type="SqlMultiStatementTableValuedFunction" Name="[dbo].[GetGenre]">
+			<Property Name="ReturnTableVariable" Value="@GenreMusic" />
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Genre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[MixId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre].[@MixId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre].[@TopGenre].[Genre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre].[@TopGenre].[Id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[GetGenre].[PrimaryGenre]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="40" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[GetGenre].[SecondaryGenre]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="40" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[GetGenre].[@TopGenre]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[GetGenre].[@TopGenre].[Id]">
+									<Property Name="IsNullable" Value="False" />
+									<Property Name="IsIdentity" Value="True" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[GetGenre].[@TopGenre].[Genre]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="40" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[varchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="FunctionBody">
+				<Entry>
+					<Element Type="SqlScriptFunctionImplementation">
+						<Property Name="BodyScript">
+							<Value><![CDATA[
+BEGIN
+    DECLARE @PrimaryGenre VARCHAR(40), @SecondaryGenre VARCHAR(40)
+	
+	DECLARE @TopGenre TABLE (
+		Id INT IDENTITY(1,1),
+		Genre VARCHAR(40)
+	)
+
+	INSERT @TopGenre SELECT TOP 2 [Song].Genre FROM dbo.[Track] 
+		INNER JOIN dbo.[Song] ON [Track].[SongId] = [Song].[Id]
+		WHERE MixId = @MixId 
+		GROUP BY [Song].[Genre]
+		ORDER BY COUNT([Song].[Genre]) DESC
+
+	SELECT @PrimaryGenre = Genre FROM @TopGenre WHERE Id = 1;
+	SELECT @SecondaryGenre = Genre FROM @TopGenre WHERE Id = 2;
+
+    INSERT INTO @GenreMusic VALUES (@PrimaryGenre, @SecondaryGenre)
+
+    RETURN 
+END]]></Value>
+						</Property>
+						<Annotation Type="SysCommentsObjectAnnotation">
+							<Property Name="Length" Value="723" />
+							<Property Name="StartLine" Value="1" />
+							<Property Name="StartColumn" Value="1" />
+							<Property Name="HeaderContents" Value="CREATE FUNCTION [dbo].[GetGenre]&#xD;&#xA;(&#xD;&#xA;&#x9;@MixId INT&#xD;&#xA;)&#xD;&#xA;RETURNS @GenreMusic TABLE (PrimaryGenre VARCHAR(40), SecondaryGenre VARCHAR(40))&#xD;&#xA;AS" />
+						</Annotation>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[GetGenre].[@MixId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Mix]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="Columns">
@@ -506,7 +680,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="14" />
+						<AttachedAnnotation Disambiguator="13" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -528,22 +702,6 @@ END]]></Value>
 				</Entry>
 				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[Mix].[UserId]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Mix].[TrackId]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -596,14 +754,13 @@ END]]></Value>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="8" />
-			<AttachedAnnotation Disambiguator="9" />
+			<AttachedAnnotation Disambiguator="7" />
 		</Element>
-		<Element Type="SqlTable" Name="[dbo].[Music]">
+		<Element Type="SqlTable" Name="[dbo].[Song]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="Columns">
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[Id]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[Id]">
 						<Property Name="IsNullable" Value="False" />
 						<Property Name="IsIdentity" Value="True" />
 						<Relationship Name="TypeSpecifier">
@@ -617,11 +774,11 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="13" />
+						<AttachedAnnotation Disambiguator="14" />
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[Name]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[Name]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -638,7 +795,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[ArtistId]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[ArtistId]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -654,7 +811,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[Length]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[Length]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -672,7 +829,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[Genre]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[Genre]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -690,7 +847,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[TrackCount]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[TrackCount]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -706,7 +863,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Music].[TrackLicenses]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Song].[TrackLicenses]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -727,7 +884,7 @@ END]]></Value>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="7" />
+			<AttachedAnnotation Disambiguator="8" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Track]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -751,7 +908,7 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Track].[MusicId]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Track].[SongId]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -787,9 +944,67 @@ END]]></Value>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="17" />
+			<AttachedAnnotation Disambiguator="16" />
+			<AttachedAnnotation Disambiguator="9" />
 			<AttachedAnnotation Disambiguator="10" />
-			<AttachedAnnotation Disambiguator="11" />
+		</Element>
+		<Element Type="SqlDmlTrigger" Name="[dbo].[Trigger_Count_New_Mix]">
+			<Property Name="IsInsertTrigger" Value="True" />
+			<Property Name="SqlTriggerType" Value="2" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+    BEGIN
+        SET NoCount ON
+		DECLARE @UserId INT, @CountNewMix INT
+		
+		DECLARE mixCursor CURSOR LOCAL STATIC FOR
+			SELECT inserted.UserId, COUNT(inserted.UserId) FROM inserted GROUP BY inserted.UserId
+
+		OPEN mixCursor
+		FETCH FIRST FROM mixCursor INTO @UserId, @CountNewMix
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			UPDATE dbo.[User] SET CountCreateMix = CountCreateMix + @CountNewMix WHERE Id = @UserId
+			FETCH NEXT FROM mixCursor INTO @UserId, @CountNewMix
+		END
+		CLOSE mixCursor
+		DEALLOCATE mixCursor
+    END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[UserId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[User]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[User].[CountCreateMix]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[User].[Id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parent">
+				<Entry>
+					<References Name="[dbo].[Mix]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Offset" Value="266" />
+				<Property Name="CreateOffset" Value="2" />
+				<Property Name="Length" Value="629" />
+				<Property Name="StartLine" Value="12" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE TRIGGER [dbo].[Trigger_Count_New_Mix]&#xD;&#xA;    ON [dbo].[Mix]&#xD;&#xA;    AFTER INSERT&#xD;&#xA;    AS" />
+			</Annotation>
 		</Element>
 		<Element Type="SqlDmlTrigger" Name="[dbo].[Trigger_Mix_After]">
 			<Property Name="IsInsertTrigger" Value="True" />
@@ -800,21 +1015,209 @@ END]]></Value>
 				<Value><![CDATA[
     BEGIN
         SET NoCount ON
-    END]]></Value>
+		DECLARE @TableMixId Table (
+			MixId INT
+		)
+		DECLARE @TableMusicId Table (
+			MusicId INT
+		)
+		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @PrimaryGenre VARCHAR(40), @SecondaryGenre VARCHAR(40)
+		IF UPDATE([SongId]) 
+		BEGIN
+			DECLARE trackUpdateCursor CURSOR LOCAL STATIC FOR
+			SELECT t.[CountMusic], s.[TrackLicenses] FROM dbo.[Song] s 
+				INNER JOIN (SELECT [SongId], COUNT([SongId]) AS CountMusic FROM dbo.[Track] GROUP BY [SongId]) t 
+				ON s.[Id] = t.[SongId]
+				WHERE s.[Id] IN (SELECT [SongId] FROM inserted GROUP BY [SongId])
+
+			OPEN trackUpdateCursor
+			FETCH FIRST FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				IF @CountMusic > @CountLicenses
+				BEGIN
+					ROLLBACK TRAN
+					RETURN
+				END
+				FETCH NEXT FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
+			END
+			CLOSE trackUpdateCursor
+			DEALLOCATE trackUpdateCursor
+		END
+
+		IF EXISTS(SELECT * FROM deleted)
+		BEGIN
+			INSERT INTO @TableMixId SELECT [MixId] FROM deleted GROUP BY [MixId]
+			INSERT INTO @TableMusicId SELECT [SongId] FROM deleted GROUP BY [SongId]
+		END
+		IF EXISTS(SELECT * FROM inserted)
+		BEGIN
+			INSERT INTO @TableMixId SELECT [MixId] FROM inserted GROUP BY [MixId]
+			INSERT INTO @TableMusicId SELECT [SongId] FROM inserted GROUP BY [SongId]
+		END
+
+		DECLARE trackCursor CURSOR LOCAL STATIC FOR
+		SELECT MixId FROM @TableMixId
+
+		OPEN trackMixCursor
+		FETCH FIRST FROM trackMixCursor INTO @Id
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			SELECT @PrimaryGenre = PrimaryGenre, @SecondaryGenre = SecondaryGenre FROM [dbo].[GetGenre](@Id)
+			UPDATE dbo.[Mix] SET dbo.[Mix].[PrimaryGenre] = @PrimaryGenre,  dbo.[Mix].[SecondaryGenre] = @SecondaryGenre WHERE Id = @Id
+			FETCH NEXT FROM trackMixCursor INTO @Id
+		END
+		CLOSE trackMixCursor
+		DEALLOCATE trackMixCursor
+
+		DECLARE trackMusicCursor CURSOR LOCAL STATIC FOR
+		SELECT MusicId FROM @TableMusicId
+
+		OPEN trackMusicCursor
+		FETCH FIRST FROM trackMusicCursor INTO @Id
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			UPDATE dbo.[Song] SET dbo.[Song].[TrackCount] = [dbo].[CountTracksMusic](@Id) WHERE Id = @Id
+			FETCH NEXT FROM trackMusicCursor INTO @Id
+		END
+		CLOSE trackMusicCursor
+		DEALLOCATE trackMusicCursor
+	END]]></Value>
 			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[TrackLicenses]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[MixId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Trigger_Mix_After].[@TableMixId].[MixId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre].[PrimaryGenre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetGenre].[SecondaryGenre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[PrimaryGenre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[SecondaryGenre]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Trigger_Mix_After].[@TableMusicId].[MusicId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[TrackCount]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[CountTracksMusic]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[Trigger_Mix_After].[@TableMixId]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[Trigger_Mix_After].[@TableMixId].[MixId]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[Trigger_Mix_After].[@TableMusicId]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[Trigger_Mix_After].[@TableMusicId].[MusicId]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
 			<Relationship Name="Parent">
 				<Entry>
 					<References Name="[dbo].[Track]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Offset" Value="431" />
+				<Property Name="Offset" Value="1881" />
 				<Property Name="CreateOffset" Value="2" />
-				<Property Name="Length" Value="150" />
-				<Property Name="StartLine" Value="21" />
+				<Property Name="Length" Value="2431" />
+				<Property Name="StartLine" Value="67" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE TRIGGER [dbo].[Trigger_Mix_After]&#xD;&#xA;    ON [dbo].[Track]&#xD;&#xA;    AFTER DELETE, INSERT, UPDATE&#xD;&#xA;    AS" />
+				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE TRIGGER [dbo].[Trigger_Mix_After]&#xD;&#xA;   ON [dbo].[Track]&#xD;&#xA;    AFTER DELETE, INSERT, UPDATE&#xD;&#xA;    AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlDmlTrigger" Name="[dbo].[Trigger_Mix_For]">
@@ -824,18 +1227,126 @@ END]]></Value>
 				<Value><![CDATA[
     BEGIN
         SET NoCount ON
+
+		DECLARE @Id INT, @CountMusic INT, @CountLicenses INT, @TimeMix NUMERIC(5, 2)
+
+		DECLARE trackMusicCursor CURSOR LOCAL STATIC FOR
+		SELECT s.[Id], i.CountTracks + s.[TrackCount], s.[TrackLicenses] FROM dbo.[Song] s 
+			INNER JOIN 
+			(SELECT COUNT([SongId]) AS CountTracks, [SongId] FROM inserted GROUP BY [SongId]) i 
+			ON  s.[Id] = i.[SongId]
+			WHERE s.[Id] IN (SELECT [SongId] FROM inserted GROUP BY [SongId]) 
+
+		OPEN trackMusicCursor
+
+		FETCH FIRST FROM trackMusicCursor INTO @Id, @CountMusic, @CountLicenses
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			IF @CountMusic > @CountLicenses
+			BEGIN
+				ROLLBACK TRAN
+				RETURN
+			END
+			FETCH NEXT FROM trackMusicCursor INTO @Id, @CountMusic, @CountLicenses
+		END
+		CLOSE trackMusicCursor
+		DEALLOCATE trackMusicCursor
+		
+		DECLARE trackMixCursor CURSOR LOCAL STATIC FOR
+		SELECT m.[Id], COUNT(m.[Id]), SUM(s.[Length]) FROM dbo.[Mix] m 
+			INNER JOIN dbo.[Track] t ON m.[Id] = t.[MixId]
+			INNER JOIN dbo.[Song] s ON t.[SongId] = s.[Id]
+			WHERE m.[Id] IN (SELECT [MixId] FROM inserted GROUP BY [MixId]) 
+			GROUP BY m.[Id]
+
+		OPEN trackMixCursor
+
+		FETCH FIRST FROM trackMixCursor INTO @Id, @CountMusic, @TimeMix
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			IF @CountMusic > 20 OR @TimeMix > 90.0
+			BEGIN
+				ROLLBACK TRAN
+				RETURN
+			END
+			FETCH NEXT FROM trackMixCursor INTO @Id, @CountMusic, @TimeMix
+		END
+		CLOSE trackMixCursor
+		DEALLOCATE trackMixCursor
     END]]></Value>
 			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[numeric]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[TrackCount]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[TrackLicenses]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[MixId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[SongId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Mix].[Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Song].[Length]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Track].[MixId]" />
+				</Entry>
+			</Relationship>
 			<Relationship Name="Parent">
 				<Entry>
 					<References Name="[dbo].[Track]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Offset" Value="295" />
+				<Property Name="Offset" Value="291" />
 				<Property Name="CreateOffset" Value="2" />
-				<Property Name="Length" Value="130" />
+				<Property Name="Length" Value="1584" />
 				<Property Name="StartLine" Value="12" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE TRIGGER [dbo].[Trigger_Mix_For]&#xD;&#xA;    ON [dbo].[Track]&#xD;&#xA;    FOR INSERT&#xD;&#xA;    AS" />
@@ -859,7 +1370,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="12" />
+						<AttachedAnnotation Disambiguator="11" />
 					</Element>
 				</Entry>
 				<Entry>
