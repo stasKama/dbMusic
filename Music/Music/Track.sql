@@ -74,21 +74,22 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		DECLARE @MusicId INT, @MixId INT, @CountMusic INT, @CountLicenses INT, @PrimaryGenre VARCHAR(40), @SecondaryGenre VARCHAR(40)
 		IF UPDATE(MusicId) 
 		BEGIN
-			 DECLARE trackUpdateCursor CURSOR LOCAL STATIC FOR
-			SELECT inserted.MusicId FROM inserted
+			DECLARE trackUpdateCursor CURSOR LOCAL STATIC FOR
+			SELECT t.[CountMusic], m.[TrackLicenses] FROM dbo.[Music] m 
+				INNER JOIN (SELECT [MusicId], COUNT([MusicId]) AS CountMusic FROM dbo.[Track] GROUP BY [MusicId]) t 
+				ON m.[Id] = t.[MusicId]
+				WHERE m.[Id] IN (SELECT [MusicId] FROM inserted GROUP BY [MusicId])
 
 			OPEN trackUpdateCursor
-			FETCH FIRST FROM trackUpdateCursor INTO @MusicId
+			FETCH FIRST FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
-				SELECT @MusicId = inserted.MusicId FROM inserted
-				SELECT @CountMusic = TrackCount, @CountLicenses = TrackLicenses FROM dbo.[Music] WHERE Id = @MusicId
-				IF ((SELECT COUNT(*) FROM inserted WHERE MusicId = @MusicId) + @CountMusic) > @CountLicenses
+				IF @CountMusic > @CountLicenses
 				BEGIN
 					ROLLBACK TRAN
 					RETURN
 				END
-				FETCH NEXT FROM trackUpdateCursor INTO @MusicId
+				FETCH NEXT FROM trackUpdateCursor INTO @CountMusic, @CountLicenses
 			END
 			CLOSE trackUpdateCursor
 			DEALLOCATE trackUpdateCursor
@@ -97,17 +98,16 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		IF EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted)
 		BEGIN
 			DECLARE trackInsertCursor CURSOR LOCAL STATIC FOR
-			SELECT inserted.MusicId FROM inserted
+			SELECT inserted.MusicId, inserted.MixId FROM inserted
 
 			OPEN trackInsertCursor
-			FETCH FIRST FROM trackInsertCursor INTO @MusicId
+			FETCH FIRST FROM trackInsertCursor INTO @MusicId, @MixId
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
-				SELECT @MixId = MixId FROM inserted WHERE MusicId = @MusicId
 				SELECT @PrimaryGenre = PrimaryGenre, @SecondaryGenre = SecondaryGenre FROM [dbo].[GetGenre](@MixId)
 				UPDATE dbo.[Music] SET dbo.[Music].TrackCount = [dbo].[CountTracksMusic](@MusicId) WHERE Id = @MusicId
 				UPDATE dbo.[Mix] SET dbo.[Mix].PrimaryGenre = @PrimaryGenre,  dbo.[Mix].SecondaryGenre = @SecondaryGenre WHERE Id = @MixId
-				FETCH NEXT FROM trackInsertCursor INTO @MusicId
+				FETCH NEXT FROM trackInsertCursor INTO @MusicId, @MixId
 			END
 		CLOSE trackInsertCursor
 		DEALLOCATE trackInsertCursor
@@ -116,17 +116,16 @@ CREATE TRIGGER [dbo].[Trigger_Mix_After]
 		IF EXISTS(SELECT * FROM deleted) AND NOT EXISTS(SELECT * FROM inserted)
 		BEGIN
 			DECLARE trackDeleteCursor CURSOR LOCAL STATIC FOR
-			SELECT deleted.MusicId FROM deleted
+			SELECT deleted.MusicId, deleted.MixId FROM deleted
 
 			OPEN trackDeleteCursor
-			FETCH FIRST FROM trackDeleteCursor INTO @MusicId
+			FETCH FIRST FROM trackDeleteCursor INTO @MusicId, @MixId
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
-				SELECT @MixId = MixId FROM deleted WHERE MusicId = @MusicId
 				SELECT @PrimaryGenre = PrimaryGenre, @SecondaryGenre = SecondaryGenre FROM [dbo].[GetGenre](@MixId)
 				UPDATE dbo.[Music] SET dbo.[Music].TrackCount = [dbo].[CountTracksMusic](@MusicId) WHERE Id = @MusicId
 				UPDATE dbo.[Mix] SET dbo.[Mix].PrimaryGenre = @PrimaryGenre,  dbo.[Mix].SecondaryGenre = @SecondaryGenre WHERE Id = @MixId
-				FETCH NEXT FROM trackDeleteCursor INTO @MusicId
+				FETCH NEXT FROM trackDeleteCursor INTO @MusicId, @MixId
 			END
 		CLOSE trackDeleteCursor
 		DEALLOCATE trackDeleteCursor
