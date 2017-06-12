@@ -1,7 +1,7 @@
 <h1>Music</h1>
 
 <p>This project contains five script files tables and two script files with functions.</p>
-<p>Mix - list OF songs of different Artist and various genre.</p>
+<p><b>Mix</b> - list of songs of different Artist and various genre.</p>
 <p>Mix has primary and secondary genre.</p>
 <p>User participatES in creating mix.</p>
 <p>Mix has limitation, if the song doesn't have enough licenses or tracks in the mix are more than 20 or the total time of mix is more than 90 minutes.</p>
